@@ -128,11 +128,8 @@ ifndef CYGWIN
    CFLAGS += -fPIC
 endif
 
-ifdef DEBUG
   CFLAGS += -ggdb3
-else
-  CFLAGS += -O2
-endif
+  CFLAGS += -O0
 
 # memory leak debugging mode
 ifdef MEMTRACE
@@ -204,7 +201,7 @@ CDEFS += -DFREEBSD
 endif
 
 #LFLAGS=-v --no-as-needed
-LFLAGS=-lm
+LFLAGS=-lm -lcrypt -lcrypto -lrt
 LPATH=-L$(LBASE) 
 
 CEES = $(wildcard *.c)

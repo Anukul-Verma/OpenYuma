@@ -1,0 +1,12 @@
+<terminal-device xmlns="http://openconfig.net/yang/terminal-device">
+    <logical-channels>
+      <channel>
+        <index>10101</index> <!-- must be uint32 -->
+        <logical-channel-assignments>
+          <assignment  nc:operation="delete">
+            <index>10101</index> <!-- the same value as parent channel's index -->
+          </assignment>
+        </logical-channel-assignments>
+      </channel>
+  </logical-channels>
+</terminal-device>

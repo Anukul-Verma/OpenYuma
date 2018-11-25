@@ -1620,7 +1620,7 @@ static status_t
 
     /* parse the command line against the PSD */
     if (res == NO_ERR) {
-        valset = cli_parse(NULL,
+        valset = ycli_parse(NULL,
                            argc, 
                            argv, 
                            obj,

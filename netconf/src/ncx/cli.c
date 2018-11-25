@@ -1110,7 +1110,7 @@ status_t
 *   pointer to the malloced and filled in val_value_t
 *********************************************************************/
 val_value_t *
-    cli_parse (runstack_context_t *rcxt,
+    ycli_parse (runstack_context_t *rcxt,
                int argc, 
                char *argv[],
                obj_template_t *obj,

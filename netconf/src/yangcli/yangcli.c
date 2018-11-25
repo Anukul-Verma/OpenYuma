@@ -2054,7 +2054,7 @@ static status_t
             }
         } else {
             /* parse the command line against the object template */    
-            mgr_cli_valset = cli_parse(server_cb->runstack_context,
+            mgr_cli_valset = ycli_parse(server_cb->runstack_context,
                                        argc, 
                                        argv, 
                                        obj,

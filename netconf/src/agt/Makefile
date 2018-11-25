@@ -144,14 +144,16 @@ RDYNAMIC=-rdynamic
 LC=-lc
 endif
 
+IZEBOS=-I$ZEBOS_DIR -I$ZEBOS_DIR/lib/smi/server -I$ZEBOS_DIR/lib/smi/client -I$ZEBOS_DIR/lib -I$ZEBOS_DIR/lib/smi/client/api -I$ZEBOS_DIR/pal/linux  -I$ZEBOS_DIR/pal/api -I$ZEBOS_DIR/lib/mpls -I$ZEBOS_DIR/lib/dste -I$ZEBOS_DIR/imi/util -I$ZEBOS_DIR/lib/fm -I$ZEBOS_DIR/sys_params/default -I$ZEBOS_DIR/lib/cml_lib -I$ZEBOS_DIR/lib/cml_lib/macros
+
 # this rule is ignored if STATIC=1; used only in linux
 $(LBASE)/libagt.so.$(SOVERSION): $(OBJS)
 ifdef FREEBSD
 	$(CC) $(CFLAGS) -shared $(RDYNAMIC) -Wl,-soname,libagt.so.$(SOVERSION) \
 	-o $@ $(OBJS) -L/usr/local/lib -L$(PREFIX)/lib $(LC) -lxml2
 else
-	$(CC) $(CFLAGS) -shared $(RDYNAMIC) -Wl,-soname,libagt.so.$(SOVERSION) \
-	-o $@ $(OBJS) -L$(PREFIX)/lib $(LC) -lxml2
+	$(CC) $(CFLAGS) $(IZEBOS) -shared $(RDYNAMIC) -Wl,-soname,libagt.so.$(SOVERSION) \
+	-o $@ $(OBJS) -L$(PREFIX)/lib $(LC) -lxml2 -L. -lsmi -lcrypt -lm -lcrypto -lrt
 endif
 
 # this rule is ignored if STATIC=1; used only on MacOSX

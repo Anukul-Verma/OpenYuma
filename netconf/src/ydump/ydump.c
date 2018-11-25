@@ -259,7 +259,7 @@ static status_t
     /* parse the command line against the object template */
     if (res == NO_ERR) {
         if (argv != NULL) {
-            valset = cli_parse(NULL,
+            valset = ycli_parse(NULL,
                                argc, 
                                argv, 
                                obj,

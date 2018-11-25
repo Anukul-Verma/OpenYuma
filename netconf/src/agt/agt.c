@@ -92,6 +92,8 @@ static boolean            agt_shutdown_started;
 static ncx_shutdowntyp_t  agt_shutmode;
 static dlq_hdr_t          agt_dynlibQ;
 
+struct smiclient_globals *azg;
+
 /********************************************************************
 * FUNCTION init_server_profile
 * 
@@ -754,11 +756,6 @@ status_t
         return res;
     }
 
-    /* load the yuma-arp module */
-    res = y_yuma_arp_init(y_yuma_arp_M_yuma_arp, NULL);
-    if (res != NO_ERR) {
-        return res;
-    }
 
     /* check the module parameter set from CLI or conf file
      * for any modules to pre-load
@@ -960,11 +957,13 @@ status_t
         return res;
     }
 
-    /* load the yuma arp callbacks */
-    res = y_yuma_arp_init2();
-    if (res != NO_ERR) {
-        return res;
-    }
+   /* Connect to NSM SMI Server */
+   azg = ZebOS_smi_client_lib_create (1,"\0");
+   res = nsm_auto_smiclient_init (azg);
+   if (res != 0)
+   {
+     return ERR_NCX_ACCESS_DENIED;
+   }
 
 #ifdef STATIC_SERVER
     /* init phase 2 for static modules should be 
@@ -1170,7 +1169,6 @@ void
         y_ietf_netconf_partial_lock_cleanup();
         agt_if_cleanup();
         y_yuma_time_filter_cleanup();
-        y_yuma_arp_cleanup();
         agt_ses_cleanup();
         agt_cap_cleanup();
         agt_rpc_cleanup();

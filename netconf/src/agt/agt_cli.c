@@ -389,7 +389,7 @@ status_t
     res = NO_ERR;
     valset = NULL;
     if (argc > 0) {
-        valset = cli_parse(NULL,
+        valset = ycli_parse(NULL,
                            argc, 
                            argv, 
                            obj,

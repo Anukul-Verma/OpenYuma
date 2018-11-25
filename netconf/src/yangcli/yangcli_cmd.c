@@ -264,7 +264,7 @@ static val_value_t* parse_rpc_cli ( server_cb_t *server_cb,
             if(secondary_args_flag) secondary_args[0] = '-';
 
             if ( myargv[1] ) {
-                retval = cli_parse( server_cb->runstack_context, 2, myargv, obj,
+                retval = ycli_parse( server_cb->runstack_context, 2, myargv, obj,
                                     VALONLY, SCRIPTMODE, get_autocomp(), 
                                     CLI_MODE_COMMAND, res );
                 m__free( myargv[1] );
@@ -4773,7 +4773,7 @@ static val_value_t *
                         char* argv[2];
                         argv[0] = obj_get_name(mytarg->obj);
                         argv[1] = secondary_args;
-                        curparm = cli_parse(server_cb->runstack_context, /*argc=*/2, argv, mytarg->obj, /*valonly=*/true, /*script=*/true, /*autocomp=*/true, /*mode=*/CLI_MODE_COMMAND, &status);
+                        curparm = ycli_parse(server_cb->runstack_context, /*argc=*/2, argv, mytarg->obj, /*valonly=*/true, /*script=*/true, /*autocomp=*/true, /*mode=*/CLI_MODE_COMMAND, &status);
                         res = val_replace(curparm, mytarg);
                     }
                     res = fill_valset(server_cb, rpc, mytarg, curparm, 
