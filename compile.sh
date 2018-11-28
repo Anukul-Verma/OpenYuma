@@ -35,16 +35,19 @@ export DESTDIR=$CURR/dest-dir
 
 cp libsmi.a openconfig-platform/src/
 cd openconfig-platform
+mkdir -p bin lib
 make all $PRODUCTION && make install DESTDIR=$CURR/dest-dir
 cd ..
 
 cp libsmi.a openconfig-platform-transceiver/src/
 cd openconfig-platform-transceiver
+mkdir -p bin lib
 make all $PRODUCTION && make install DESTDIR=$CURR/dest-dir
 cd ..
 
 cp libsmi.a openconfig-terminal-device/src/
 cd openconfig-terminal-device
+mkdir -p bin lib
 make all $PRODUCTION && make install DESTDIR=$CURR/dest-dir
 cd ..
 

@@ -959,7 +959,17 @@ status_t
 
    /* Connect to NSM SMI Server */
    azg = ZebOS_smi_client_lib_create (1,"\0");
-   res = nsm_auto_smiclient_init (azg);
+
+   if (azg)
+   {
+     res = nsm_auto_smiclient_init (azg);
+     //res = interface_auto_smiclient_init (azg);
+   }
+   else
+   {
+     res = ERR_NCX_ACCESS_DENIED;
+   }
+
    if (res != 0)
    {
      return ERR_NCX_ACCESS_DENIED;
