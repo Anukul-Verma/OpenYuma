@@ -1,4 +1,4 @@
-# Anukul: Script to generate libsmi.a & compile test Application
+# Anukul: Script to generate libsmi.a & compile OpenYuma with SIL
 
 #Input ZebOS/ZebOS8NG directory path
 if [ "$1" == "" ]
@@ -11,6 +11,7 @@ fi
 
 export ZEBOS_DIR=$1
 export CURR=`pwd`
+PRODUCTION="PRODUCTION=1"
 
 rm -rf testapp_tmp
 mkdir testapp_tmp
@@ -25,25 +26,26 @@ cd ..
 rm -rf testapp_tmp
 cp libsmi.a netconf/src/agt/
 
-make all && make install DESTDIR=$CURR/dest-dir
+make all $PRODUCTION && make install DESTDIR=$CURR/dest-dir
 cp libsmi.a $CURR/dest-dir/usr/lib/
 cp netconfd.conf dest-dir/etc/yuma/
 cp openconfig-yang/* dest-dir/usr/share/yuma/modules/netconfcentral/
 
+export DESTDIR=$CURR/dest-dir
 
 cp libsmi.a openconfig-platform/src/
 cd openconfig-platform
-make all && make install DESTDIR=$CURR/dest-dir
+make all $PRODUCTION && make install DESTDIR=$CURR/dest-dir
 cd ..
 
 cp libsmi.a openconfig-platform-transceiver/src/
 cd openconfig-platform-transceiver
-make all && make install DESTDIR=$CURR/dest-dir
+make all $PRODUCTION && make install DESTDIR=$CURR/dest-dir
 cd ..
 
 cp libsmi.a openconfig-terminal-device/src/
 cd openconfig-terminal-device
-make all && make install DESTDIR=$CURR/dest-dir
+make all $PRODUCTION && make install DESTDIR=$CURR/dest-dir
 cd ..
 
 cp netconf/startup-cfg.xml dest-dir/

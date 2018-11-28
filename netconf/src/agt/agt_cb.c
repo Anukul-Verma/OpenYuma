@@ -303,7 +303,7 @@ static agt_cb_modhdr_t *
     int           ret;
 
     for (modhdr = (agt_cb_modhdr_t *)dlq_firstEntry(&modhdrQ);
-         modhdr != NULL;
+         modhdr != NULL && modhdr->modname != NULL;
          modhdr = (agt_cb_modhdr_t *)dlq_nextEntry(modhdr)) {
 
          ret = xml_strcmp(modname, modhdr->modname);
@@ -712,6 +712,11 @@ void
         return;
     }
 #endif
+
+    if (modname == NULL
+     || !strlen(modname)
+     || !xml_strcmp(modname,(const xmlChar *)"openconfig-terminal-device"))
+      return;
 
     modhdr = find_modhdr(modname);
     if (!modhdr) {

@@ -52,6 +52,7 @@ CINC += -I$(CINCBASE)/yuma/platform -I$(CINCBASE)/yuma/ncx \
 endif
 
 CINC += -I$(CINCBASE) -I$(CINCBASE)/libxml2 -I$(CINCBASE)/libxml2/libxml
+CINC += -I/usr/include/libxml2 -I/usr/include/libxml2/libxml
 
 ifdef FREEBSD
 CINC += -I/usr/local/include -I/usr/local/include/libxml2 \
@@ -107,8 +108,11 @@ ifndef NOFLOAT
 endif
 
 # production (0) or debug (1) build
-  CFLAGS += -ggdb3
+ifdef DEBUG
+  CFLAGS += -ggdb3 -O0
+else
   CFLAGS += -O2
+endif
 
 CFLAGS += $(CDEFS) $(CWARN)
 

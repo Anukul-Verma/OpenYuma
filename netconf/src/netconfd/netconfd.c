@@ -309,6 +309,39 @@ static void show_version(void)
     agt_request_shutdown(NCX_SHUT_EXIT);
 }
 
+int
+daemonize (void)
+{
+  pid_t pid;
+
+  pid = fork ();
+  /* In case of fork is error. */
+  if (pid < 0)
+  {
+    perror ("fork");
+    return -1;
+  }
+
+  /* In case of this is parent process. */
+  if (pid != 0)
+    exit (0);
+
+  /* Become session leader and get pid. */
+  pid = setsid();
+
+  if (pid < -1)
+  {
+    perror ("setsid");
+    return -1;
+  }
+ /* Change directory to root. */
+  chdir ("/");
+  umask (0027);
+
+  return 0;
+}
+
+
 /********************************************************************
 *                                                                   *
 *                       FUNCTION main                               *
@@ -324,6 +357,14 @@ int main (int argc, char *argv[])
 #ifdef MEMORY_DEBUG
     mtrace();
 #endif
+    if(!system("netstat -nlp | grep netconfd > /dev/null"))
+    {
+      printf ("Other netconfd may be running. Please check it\n");
+      exit (1);
+    }
+
+    daemonize ();
+
 
     /* this loop is used to implement the restart command the sw image is not 
      * reloaded; instead everything is cleaned up and re-initialized from 

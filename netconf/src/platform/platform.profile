@@ -128,8 +128,11 @@ ifndef CYGWIN
    CFLAGS += -fPIC
 endif
 
-  CFLAGS += -ggdb3
-  CFLAGS += -O0
+ifdef DEBUG
+  CFLAGS += -ggdb3 -O0
+else
+  CFLAGS += -O2
+endif
 
 # memory leak debugging mode
 ifdef MEMTRACE

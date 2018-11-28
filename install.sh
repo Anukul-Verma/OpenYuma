@@ -12,7 +12,7 @@ cp dest-dir/startup-cfg.xml /root/.yuma/
 killall -15 netconfd
 rm -rf /tmp/ncxserver.sock
 #netconfd --superuser=root &
-netconfd &
+netconfd
 
 echo "delete /nacm" > /tmp/a.txt
 echo "commit" >> /tmp/a.txt
